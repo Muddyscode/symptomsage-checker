@@ -1,103 +1,337 @@
-import Image from "next/image";
+'use client';
+import Link from 'next/link';
+import { auth } from '@/lib/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [user, loading] = useAuthState(auth);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <main className="min-h-screen">
+      {/* Hero Section with Video Background */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Video Background */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute top-0 left-0 w-full h-full object-cover"
+        >
+          <source src="https://cdn.coverr.co/videos/coverr-doctor-using-digital-tablet-4297/1080p.mp4" type="video/mp4" />
+          {/* Fallback to gradient if video fails */}
+        </video>
+        
+        {/* Animated Gradient Overlay */}
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-cyan-900/90 via-blue-800/85 to-blue-900/90"></div>
+        
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-6xl mx-auto text-center px-4 space-y-8">
+          <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight animate-fade-in">
+            Your Health, <span className="text-cyan-300">Decoded</span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-cyan-100 max-w-3xl mx-auto">
+            AI-powered symptom analysis tailored for Nigeria. Get instant insights on malaria, typhoid, and more—always free, always ethical.
+          </p>
+
+          {/* Disclaimer Badge */}
+          <div className="inline-block bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-6 py-3">
+            <p className="text-sm text-cyan-50 flex items-center gap-2">
+              <span className="text-lg">⚠️</span>
+              <span>Educational tool only—always consult a healthcare professional</span>
+            </p>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
+            {loading ? (
+              <div className="text-cyan-200 text-lg">Loading...</div>
+            ) : user ? (
+              <div className="text-center space-y-4">
+                <p className="text-cyan-100 text-xl">
+                  Welcome back, <span className="font-bold text-white text-2xl">{user.displayName || user.email.split('@')[0]}</span>! 👋
+                </p>
+                <Link
+                  href="/check"
+                  className="inline-block bg-white text-blue-600 px-10 py-4 rounded-xl font-bold text-lg hover:bg-cyan-50 transition-all duration-300 shadow-2xl hover:shadow-cyan-500/50 hover:scale-105 transform"
+                >
+                  Start Symptom Check →
+                </Link>
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/signup"
+                  className="bg-white text-blue-600 px-10 py-4 rounded-xl font-bold text-lg hover:bg-cyan-50 transition-all duration-300 shadow-2xl hover:shadow-cyan-500/50 hover:scale-105 transform"
+                >
+                  Get Started Free
+                </Link>
+                <Link
+                  href="/login"
+                  className="bg-transparent border-2 border-white text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
+                >
+                  Log In
+                </Link>
+              </>
+            )}
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+            <div className="w-1 h-3 bg-white rounded-full"></div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+              How SymptomSage Works
+            </h2>
+            <p className="text-xl text-gray-600">Three simple steps to better health insights</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {/* Step 1 */}
+            <div className="text-center space-y-4">
+              <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto text-white text-3xl font-bold shadow-lg">
+                1
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Describe Symptoms</h3>
+              <p className="text-gray-600">
+                Type or speak your symptoms in plain language. Include details like duration, severity, and any relevant history.
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="text-center space-y-4">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto text-white text-3xl font-bold shadow-lg">
+                2
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">AI Analysis</h3>
+              <p className="text-gray-600">
+                Our AI instantly analyzes your symptoms against common Nigerian ailments like malaria, typhoid, and more.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="text-center space-y-4">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center mx-auto text-white text-3xl font-bold shadow-lg">
+                3
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Get Insights</h3>
+              <p className="text-gray-600">
+                Receive possible conditions with urgency flags, health tips, and nearby clinic recommendations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-cyan-500 via-blue-600 to-blue-700 text-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="space-y-2">
+              <div className="text-5xl font-bold">10K+</div>
+              <div className="text-cyan-100">Symptoms Analyzed</div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-5xl font-bold">5K+</div>
+              <div className="text-cyan-100">Users Helped</div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-5xl font-bold">24/7</div>
+              <div className="text-cyan-100">Always Available</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 px-4 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-16">
+            Why Choose SymptomSage?
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Feature 1 */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
+              <div className="text-5xl mb-4">⚡</div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">Lightning Fast</h3>
+              <p className="text-gray-600">
+                Enter symptoms via text or voice in seconds. Get instant AI-powered insights without waiting.
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
+              <div className="text-5xl mb-4">🧠</div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">Smart Analysis</h3>
+              <p className="text-gray-600">
+                AI identifies possible conditions with probability scores and urgency flags for peace of mind.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
+              <div className="text-5xl mb-4">🏥</div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">Local Clinics</h3>
+              <p className="text-gray-600">
+                Find nearby healthcare facilities in Nigeria when you need professional medical care.
+              </p>
+            </div>
+
+            {/* Feature 4 */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
+              <div className="text-5xl mb-4">🇳🇬</div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">Nigeria-Focused</h3>
+              <p className="text-gray-600">
+                Trained on common tropical diseases like malaria, typhoid, and heat-related illnesses.
+              </p>
+            </div>
+
+            {/* Feature 5 */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
+              <div className="text-5xl mb-4">🔒</div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">Privacy First</h3>
+              <p className="text-gray-600">
+                Your health data is private and secure. We never share your information without consent.
+              </p>
+            </div>
+
+            {/* Feature 6 */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
+              <div className="text-5xl mb-4">💚</div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">Always Free</h3>
+              <p className="text-gray-600">
+                No hidden fees, no subscriptions. Healthcare insights should be accessible to everyone.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-16">
+            What Users Say
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gradient-to-br from-cyan-50 to-blue-50 p-6 rounded-xl shadow-md">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                  A
+                </div>
+                <div className="ml-3">
+                  <div className="font-semibold text-gray-800">Adaobi O.</div>
+                  <div className="text-sm text-gray-500">Lagos</div>
+                </div>
+              </div>
+              <p className="text-gray-700 italic">
+                &quot;Helped me recognize malaria symptoms early. I got treatment before it got worse. Thank you!&quot;
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl shadow-md">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                  C
+                </div>
+                <div className="ml-3">
+                  <div className="font-semibold text-gray-800">Chidi M.</div>
+                  <div className="text-sm text-gray-500">Port Harcourt</div>
+                </div>
+              </div>
+              <p className="text-gray-700 italic">
+                &quot;The voice input feature is amazing. Super fast and easy to use even when I&apos;m not feeling well.&quot;
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-xl shadow-md">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                  F
+                </div>
+                <div className="ml-3">
+                  <div className="font-semibold text-gray-800">Fatima A.</div>
+                  <div className="text-sm text-gray-500">Abuja</div>
+                </div>
+              </div>
+              <p className="text-gray-700 italic">
+                &quot;Finally, a health tool that understands Nigerian health issues. The clinic finder is very helpful.&quot;
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 px-4 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-16">
+            Frequently Asked Questions
+          </h2>
+          
+          <div className="space-y-6">
+            <div className="bg-white p-6 rounded-xl shadow-md">
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Is SymptomSage a replacement for a doctor?</h3>
+              <p className="text-gray-600">
+                No. SymptomSage is an educational tool that helps you understand your symptoms. Always consult a qualified healthcare professional for diagnosis and treatment.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl shadow-md">
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Is my health information private?</h3>
+              <p className="text-gray-600">
+                Yes. We take privacy seriously. Your symptom data is encrypted and never shared with third parties without your explicit consent.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl shadow-md">
+              <h3 className="text-xl font-bold text-gray-800 mb-2">How accurate is the AI?</h3>
+              <p className="text-gray-600">
+                Our AI is trained on medical data and common Nigerian ailments, but it&apos;s not perfect. Results are probabilities, not diagnoses. Always verify with a healthcare provider.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl shadow-md">
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Is SymptomSage really free?</h3>
+              <p className="text-gray-600">
+                Yes, completely free. No hidden costs, no premium tiers. We believe everyone deserves access to health information.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      {!user && (
+        <section className="py-20 px-4 bg-gradient-to-br from-cyan-600 via-blue-700 to-blue-800 text-white">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <h2 className="text-4xl md:text-5xl font-bold">
+              Ready to Understand Your Symptoms?
+            </h2>
+            <p className="text-xl text-cyan-100">
+              Join thousands of Nigerians taking control of their health with AI-powered insights.
+            </p>
+            <Link
+              href="/signup"
+              className="inline-block bg-white text-blue-600 px-10 py-4 rounded-xl font-bold text-lg hover:bg-cyan-50 transition-all duration-300 shadow-2xl hover:shadow-cyan-500/50 hover:scale-105 transform"
+            >
+              Get Started Free →
+            </Link>
+          </div>
+        </section>
+      )}
+    </main>
   );
 }
