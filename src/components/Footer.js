@@ -51,6 +51,9 @@ export default function Footer() {
           <p className="text-sm text-gray-400">
             © {new Date().getFullYear()} SymptomSage. Built with care for Nigeria. 🇳🇬
           </p>
+          <p className="text-xs text-gray-500 mt-2">
+            Built by <span className="text-cyan-400 font-semibold">Mykel</span>
+          </p>
         </div>
       </div>
     </footer>
