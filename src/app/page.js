@@ -44,40 +44,41 @@ export default function Home() {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
             {loading ? (
               <div className="text-cyan-200 text-lg">Loading...</div>
             ) : user ? (
-              <div className="text-center space-y-4">
-                <p className="text-cyan-100 text-xl">
-                  Welcome back, <span className="font-bold text-white text-2xl">{user.displayName || user.email.split('@')[0]}</span>! 👋
-                </p>
-                <Link
-                  href="/check"
-                  className="inline-block bg-white text-blue-600 px-10 py-4 rounded-xl font-bold text-lg hover:bg-cyan-50 transition-all duration-300 shadow-2xl hover:shadow-cyan-500/50 hover:scale-105 transform"
-                >
-                  Start Symptom Check →
-                </Link>
-              </div>
+              <>
+                <div className="text-center">
+                  <p className="text-cyan-100 mb-3 text-lg">
+                    Welcome back, <span className="font-bold text-white">{user.displayName || user.email.split('@')[0]}</span>! 👋
+                  </p>
+                  <Link
+                    href="/check"
+                    className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-cyan-50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
+                  >
+                    Start Symptom Check →
+                  </Link>
+                </div>
+              </>
             ) : (
               <>
                 <Link
                   href="/signup"
-                  className="bg-white text-blue-600 px-10 py-4 rounded-xl font-bold text-lg hover:bg-cyan-50 transition-all duration-300 shadow-2xl hover:shadow-cyan-500/50 hover:scale-105 transform"
+                  className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-cyan-50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
                 >
                   Get Started Free
                 </Link>
                 <Link
                   href="/login"
-                  className="bg-transparent border-2 border-white text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
+                  className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/10 transition-all duration-300"
                 >
-                  Log In
+                  Login
                 </Link>
               </>
             )}
           </div>
         </div>
-
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
@@ -133,85 +134,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-cyan-500 via-blue-600 to-blue-700 text-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="space-y-2">
-              <div className="text-5xl font-bold">10K+</div>
-              <div className="text-cyan-100">Symptoms Analyzed</div>
-            </div>
-            <div className="space-y-2">
-              <div className="text-5xl font-bold">5K+</div>
-              <div className="text-cyan-100">Users Helped</div>
-            </div>
-            <div className="space-y-2">
-              <div className="text-5xl font-bold">24/7</div>
-              <div className="text-cyan-100">Always Available</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Features Section */}
-      <section className="py-20 px-4 bg-gray-50">
+      <section className="py-16 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
             Why Choose SymptomSage?
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
-              <div className="text-5xl mb-4">⚡</div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Lightning Fast</h3>
+            <div className="bg-gradient-to-br from-cyan-50 to-blue-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow">
+              <div className="text-4xl mb-4">⚡</div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Lightning Fast</h3>
               <p className="text-gray-600">
-                Enter symptoms via text or voice in seconds. Get instant AI-powered insights without waiting.
+                Enter symptoms via text or voice in seconds. Get instant AI-powered insights.
               </p>
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
-              <div className="text-5xl mb-4">🧠</div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Smart Analysis</h3>
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow">
+              <div className="text-4xl mb-4">🧠</div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Smart Analysis</h3>
               <p className="text-gray-600">
-                AI identifies possible conditions with probability scores and urgency flags for peace of mind.
+                AI identifies possible conditions with probability scores and urgency flags.
               </p>
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
-              <div className="text-5xl mb-4">🏥</div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Local Clinics</h3>
+            <div className="bg-gradient-to-br from-orange-50 to-amber-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow">
+              <div className="text-4xl mb-4">🏥</div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Local Clinics</h3>
               <p className="text-gray-600">
-                Find nearby healthcare facilities in Nigeria when you need professional medical care.
-              </p>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
-              <div className="text-5xl mb-4">🇳🇬</div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Nigeria-Focused</h3>
-              <p className="text-gray-600">
-                Trained on common tropical diseases like malaria, typhoid, and heat-related illnesses.
-              </p>
-            </div>
-
-            {/* Feature 5 */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
-              <div className="text-5xl mb-4">🔒</div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Privacy First</h3>
-              <p className="text-gray-600">
-                Your health data is private and secure. We never share your information without consent.
-              </p>
-            </div>
-
-            {/* Feature 6 */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
-              <div className="text-5xl mb-4">💚</div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Always Free</h3>
-              <p className="text-gray-600">
-                No hidden fees, no subscriptions. Healthcare insights should be accessible to everyone.
+                Find nearby healthcare facilities in Nigeria when you need professional care.
               </p>
             </div>
           </div>
@@ -302,32 +256,55 @@ export default function Home() {
                 Our AI is trained on medical data and common Nigerian ailments, but it&apos;s not perfect. Results are probabilities, not diagnoses. Always verify with a healthcare provider.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="bg-white p-6 rounded-xl shadow-md">
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Is SymptomSage really free?</h3>
-              <p className="text-gray-600">
-                Yes, completely free. No hidden costs, no premium tiers. We believe everyone deserves access to health information.
-              </p>
-            </div>
+      {/* Nigeria-Focused Section */}
+      <section className="py-16 px-4 bg-gradient-to-br from-green-50 to-emerald-50">
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+            Built for Naija 🇳🇬
+          </h2>
+          <p className="text-lg text-gray-700">
+            We understand common Nigerian health concerns—malaria, typhoid, heat-related issues, and more. 
+            Get context-aware insights that matter to your environment.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 pt-4">
+            <span className="bg-white px-4 py-2 rounded-full text-sm font-medium text-gray-700 shadow-sm">
+              Malaria Symptoms
+            </span>
+            <span className="bg-white px-4 py-2 rounded-full text-sm font-medium text-gray-700 shadow-sm">
+              Typhoid Fever
+            </span>
+            <span className="bg-white px-4 py-2 rounded-full text-sm font-medium text-gray-700 shadow-sm">
+              Heat Exhaustion
+            </span>
+            <span className="bg-white px-4 py-2 rounded-full text-sm font-medium text-gray-700 shadow-sm">
+              Food Poisoning
+            </span>
+            <span className="bg-white px-4 py-2 rounded-full text-sm font-medium text-gray-700 shadow-sm">
+              + Many More
+            </span>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
       {!user && (
-        <section className="py-20 px-4 bg-gradient-to-br from-cyan-600 via-blue-700 to-blue-800 text-white">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <h2 className="text-4xl md:text-5xl font-bold">
-              Ready to Understand Your Symptoms?
+        <section className="py-16 px-4 bg-gradient-to-br from-blue-600 to-cyan-500 text-white">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            <h2 className="text-3xl md:text-4xl font-bold">
+              Ready to Check Your Symptoms?
             </h2>
             <p className="text-xl text-cyan-100">
-              Join thousands of Nigerians taking control of their health with AI-powered insights.
+              Join thousands of Nigerians using SymptomSage for quick health insights.
             </p>
             <Link
               href="/signup"
-              className="inline-block bg-white text-blue-600 px-10 py-4 rounded-xl font-bold text-lg hover:bg-cyan-50 transition-all duration-300 shadow-2xl hover:shadow-cyan-500/50 hover:scale-105 transform"
+              className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-cyan-50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
             >
-              Get Started Free →
+              Start Free Now →
             </Link>
           </div>
         </section>
